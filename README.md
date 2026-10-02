@@ -4,8 +4,8 @@ A full-stack machine learning web app that classifies clothing images into 10 Fa
 
 ## 🚀 Live Demo
 
-- **Frontend:** Deployed on Vercel
-- **Backend:** Deployed on Render
+- **Frontend:** https://mlproject-black.vercel.app
+- **Backend:** https://mlproject-z0t2.onrender.com
 
 ---
 
@@ -104,7 +104,7 @@ VITE_API_URL=http://localhost:5000
 ### Frontend → Vercel
 - Root directory: `frontend`
 - Framework: Vite
-- Add env var: `VITE_API_URL=<your-render-url>`
+- Add env var: `VITE_API_URL=https://mlproject-z0t2.onrender.com`
 
 ---
 
