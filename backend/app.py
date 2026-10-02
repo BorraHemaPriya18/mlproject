@@ -54,7 +54,10 @@ def _train_model():
     from sklearn.linear_model import SGDClassifier
     from sklearn.preprocessing import StandardScaler
 
-    base = "http://fashion-mnist.s3-website.eu-west-1.amazonaws.com/"
+    mirrors = [
+        "https://storage.googleapis.com/tensorflow/tf-keras-datasets/",
+        "http://fashion-mnist.s3-website.eu-west-1.amazonaws.com/",
+    ]
     files = {
         "X_train": "train-images-idx3-ubyte.gz",
         "y_train": "train-labels-idx1-ubyte.gz",
@@ -74,7 +77,16 @@ def _train_model():
     for key, fname in files.items():
         dest = os.path.join(BASE_DIR, fname)
         if not os.path.exists(dest):
-            urllib.request.urlretrieve(base + fname, dest)
+            downloaded = False
+            for base in mirrors:
+                try:
+                    urllib.request.urlretrieve(base + fname, dest)
+                    downloaded = True
+                    break
+                except Exception as e:
+                    print(f"[Model] Mirror {base} failed: {e}")
+            if not downloaded:
+                raise RuntimeError(f"Failed to download {fname} from all mirrors")
 
     X = load_images(os.path.join(BASE_DIR, files["X_train"]))
     y = load_labels(os.path.join(BASE_DIR, files["y_train"]))
@@ -307,6 +319,10 @@ def predict_upload():
     except Exception as e:
         return jsonify({"success": False, "message": f"Failed to process image: {str(e)}"}), 500
 
+
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({"status": "ML Project Backend is running"})
 
 @app.route("/api/ping", methods=["GET"])
 def ping():
