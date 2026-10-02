@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Large model file (retrained on server startup)
+backend/model.pkl
+
+# Data files (regenerated at runtime)
+backend/users.json
+backend/feedback.json
+backend/contact.json
+backend/history.json
+
+# Misc
+.DS_Store
+*.log
